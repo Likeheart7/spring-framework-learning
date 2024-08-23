@@ -1,6 +1,5 @@
 package com.chenx.bean;
 
-import com.chenx.bean.DemoBean;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {

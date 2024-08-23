@@ -550,22 +550,31 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	/**
+	 * 容器初始化的过程：
+	 * BeanDefinition的Resource定位、BeanDefinition的载入、BeanDefinition的注册
+	 * AbstractBeanDefinition 有 lazyInit 属性使用户可以对容器的初始化过程做一个微小的调控，
+	 * lazyInit 设为 false 的 bean 将在容器初始化时进行依赖注入，为true会等到应用第一次调用 getBean() 方法调用时才进行
+	 * @throws BeansException
+	 * @throws IllegalStateException
+	 */
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
 
-			// Prepare this context for refreshing.
+			// 准备刷新，获取容器的当前时间，同时给容器设置同步标识
 			prepareRefresh();
 
-			// Tell the subclass to refresh the internal bean factory.
+			//告诉子类启动 refreshBeanFactory() 方法，BeanDefinition 资源文件的载入从子类的 refreshBeanFactory() 方法启动开始
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			// Prepare the bean factory for use in this context.
+			// 给beanFactory配置容器属性，如类加载器、事件处理器等
 			prepareBeanFactory(beanFactory);
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
+				// 为容器的某些子类指定特殊的BeanPost处理器
 				postProcessBeanFactory(beanFactory);
 
 				StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
@@ -625,8 +634,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void prepareRefresh() {
 		// Switch to active.
+		// 获取容器的当前时间
 		this.startupDate = System.currentTimeMillis();
 		this.closed.set(false);
+		// 设置容器状态
 		this.active.set(true);
 
 		if (logger.isDebugEnabled()) {

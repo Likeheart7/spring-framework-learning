@@ -146,6 +146,11 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private boolean abstractFlag = false;
 
+	/**
+	 * 该属性可以控制依赖注入的时机
+	 * false：容器初始化时进行依赖注入
+	 * true：应用第一次调用getBean时进行依赖注入
+	 */
 	@Nullable
 	private Boolean lazyInit;
 

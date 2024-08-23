@@ -113,22 +113,29 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 
 
 	/**
-	 * This implementation performs an actual refresh of this context's underlying
-	 * bean factory, shutting down the previous bean factory (if any) and
-	 * initializing a fresh bean factory for the next phase of the context's lifecycle.
+	 * 在这里完成了容器的初始化，并赋值给自己私有的 beanFactory 属性
+	 * 该方法是从抽象父类AbstractApplicationContext继承来的抽象方法，重写了。
 	 */
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
+		// 如果已经有了IOC容器，清除并关闭这个容器
 		if (hasBeanFactory()) {
+			// 清除容器中的单例
 			destroyBeans();
+			// 关闭容器
 			closeBeanFactory();
 		}
 		try {
+			// 创建一个新的IOC容器，DefaultListableBeanFactory实现了ConfigurableListableBeanFactory接口
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
+			// 指定一个序列化id
 			beanFactory.setSerializationId(getId());
 			beanFactory.setApplicationStartup(getApplicationStartup());
+			// 定制IOC容器的属性，如启动参数，开启注解自动装配等
 			customizeBeanFactory(beanFactory);
+			// 加载BeanDefinition，本类中的该方法是一个抽象方法。
 			loadBeanDefinitions(beanFactory);
+			// 将IOC容器赋给自身属性
 			this.beanFactory = beanFactory;
 		}
 		catch (IOException ex) {
@@ -155,7 +162,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	}
 
 	/**
-	 * Determine whether this context currently holds a bean factory,
+	 * 判断当前上下文环境是否已经有一个IOC容器
 	 * i.e. has been refreshed at least once and not been closed yet.
 	 */
 	protected final boolean hasBeanFactory() {

@@ -78,7 +78,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	/**
 	 * Create a new FileSystemXmlApplicationContext, loading the definitions
 	 * from the given XML file and automatically refreshing the context.
-	 * @param configLocation file path
+	 * @param configLocation 包含beanDefinition的文件路径
 	 * @throws BeansException if context creation failed
 	 */
 	public FileSystemXmlApplicationContext(String configLocation) throws BeansException {
@@ -88,7 +88,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	/**
 	 * Create a new FileSystemXmlApplicationContext, loading the definitions
 	 * from the given XML files and automatically refreshing the context.
-	 * @param configLocations array of file paths
+	 * @param configLocations 多个定义了beanDefinition的文件路径
 	 * @throws BeansException if context creation failed
 	 */
 	public FileSystemXmlApplicationContext(String... configLocations) throws BeansException {
@@ -99,8 +99,8 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	 * Create a new FileSystemXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files and automatically
 	 * refreshing the context.
-	 * @param configLocations array of file paths
-	 * @param parent the parent context
+	 * @param configLocations 多个定义了beanDefinition的文件路径
+	 * @param parent 父IOC容器
 	 * @throws BeansException if context creation failed
 	 */
 	public FileSystemXmlApplicationContext(String[] configLocations, ApplicationContext parent) throws BeansException {
@@ -122,6 +122,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	}
 
 	/**
+	 * 所有构造器都经过这个构造器
 	 * Create a new FileSystemXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files.
 	 * @param configLocations array of file paths
@@ -135,16 +136,21 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	public FileSystemXmlApplicationContext(
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
-
+		// 动态地确定用哪个加载器加载配置文件
 		super(parent);
+		// 设置配置文件的地址，方法继承自祖父类AbstractRefreshableConfigApplicationContext
 		setConfigLocations(configLocations);
 		if (refresh) {
+			// 容器初始化，方法来源与父类AbstractApplicationContext
 			refresh();
 		}
 	}
 
 
 	/**
+	 * 实例化一个FileSystemResource实例返回，用于后续对资源的IO操作。
+	 * 该方法会在父类DefaultResourceLoader中的getResource中使用使用
+	 *
 	 * Resolve resource paths as file system paths.
 	 * <p>Note: Even if a given path starts with a slash, it will get
 	 * interpreted as relative to the current VM working directory.
