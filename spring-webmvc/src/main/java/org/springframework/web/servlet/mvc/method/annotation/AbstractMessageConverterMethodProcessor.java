@@ -151,6 +151,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 	}
 
 	/**
+	 * 找一个合适的Converter处理返回值
 	 * Writes the given return type to the given output message.
 	 * @param value the value to write to the output message
 	 * @param returnType the type of the value
@@ -234,6 +235,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 						"No converter found for return value of type: " + valueType);
 			}
 			List<MediaType> mediaTypesToUse = new ArrayList<>();
+			// 找出所有匹配的可以支持的返回类型
 			for (MediaType requestedType : acceptableTypes) {
 				for (MediaType producibleType : producibleTypes) {
 					if (requestedType.isCompatibleWith(producibleType)) {
@@ -251,6 +253,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 				return;
 			}
 
+			// 把这些排个序
 			MediaType.sortBySpecificityAndQuality(mediaTypesToUse);
 
 			for (MediaType mediaType : mediaTypesToUse) {

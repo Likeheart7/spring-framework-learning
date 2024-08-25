@@ -40,6 +40,7 @@ public class SimpleControllerHandlerAdapter implements HandlerAdapter {
 
 	@Override
 	public boolean supports(Object handler) {
+		// 判断要执行的 handler 是不是 Controller类型的
 		return (handler instanceof Controller);
 	}
 

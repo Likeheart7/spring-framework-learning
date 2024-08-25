@@ -88,6 +88,8 @@ public abstract class WebApplicationContextUtils {
 	}
 
 	/**
+	 * 使用了WebApplicationContext的ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE属性，
+	 * 获取ServletContext中的根上下文，该属性代表的根上下文在ContextLoaderListener初始化的过程中建立
 	 * Find the root {@code WebApplicationContext} for this web app, typically
 	 * loaded via {@link org.springframework.web.context.ContextLoaderListener}.
 	 * <p>Will rethrow an exception that happened on root context startup,
@@ -102,6 +104,7 @@ public abstract class WebApplicationContextUtils {
 	}
 
 	/**
+	 * 查找此web应用程序打的自定义WebApplicationContext
 	 * Find a custom {@code WebApplicationContext} for this web app.
 	 * @param sc the ServletContext to find the web application context for
 	 * @param attrName the name of the ServletContext attribute to look for

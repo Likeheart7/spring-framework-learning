@@ -31,6 +31,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
 /**
+ * 一般情况下，在{@link DispatcherServlet#doDispatch} 中，调用{@link DispatcherServlet#getHandler}方法时的返回值，
+ * 就是本类型，其中包括对应的Controller控制层处理器和涉及到的拦截器。
  * Handler execution chain, consisting of handler object and any handler interceptors.
  * Returned by HandlerMapping's {@link HandlerMapping#getHandler} method.
  *
@@ -95,6 +97,7 @@ public class HandlerExecutionChain {
 	}
 
 	/**
+	 * 添加拦截器到拦截器链的结尾
 	 * Add the given interceptor to the end of this chain.
 	 */
 	public void addInterceptor(HandlerInterceptor interceptor) {
@@ -110,6 +113,7 @@ public class HandlerExecutionChain {
 	}
 
 	/**
+	 * 批量添加拦截器
 	 * Add the given interceptors to the end of this chain.
 	 */
 	public void addInterceptors(HandlerInterceptor... interceptors) {
@@ -137,6 +141,7 @@ public class HandlerExecutionChain {
 
 
 	/**
+	 * 逐个处理链中的每个拦截器
 	 * Apply preHandle methods of registered interceptors.
 	 * @return {@code true} if the execution chain should proceed with the
 	 * next interceptor or the handler itself. Else, DispatcherServlet assumes
@@ -145,6 +150,7 @@ public class HandlerExecutionChain {
 	boolean applyPreHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		for (int i = 0; i < this.interceptorList.size(); i++) {
 			HandlerInterceptor interceptor = this.interceptorList.get(i);
+			// preHandle就是直接调用拦截器的preHandle方法，如果返回值是false，就直接结束了
 			if (!interceptor.preHandle(request, response, this.handler)) {
 				triggerAfterCompletion(request, response, null);
 				return false;

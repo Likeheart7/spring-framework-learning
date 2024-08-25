@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.lang.Nullable;
 
 /**
+ * 核心方法{@link #getHandler(HttpServletRequest)}
  * Interface to be implemented by objects that define a mapping between
  * requests and handler objects.
  *
@@ -153,6 +154,7 @@ public interface HandlerMapping {
 	}
 
 	/**
+	 * 返回值HandlerExecutionChain包括了handler本身和处理这个HTTP请求的拦截器链
 	 * Return a handler and any interceptors for this request. The choice may be made
 	 * on request URL, session state, or any factor the implementing class chooses.
 	 * <p>The returned HandlerExecutionChain contains a handler Object, rather than

@@ -487,6 +487,8 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	}
 
 	/**
+	 * 查找给定请求的handler，如果找不到，返回defaultHandler，本方法是一个模板方法，定义了流程
+	 * {@link #getHandlerInternal} 交由子类实现
 	 * Look up a handler for the given request, falling back to the default
 	 * handler if no specific one is found.
 	 * @param request current HTTP request
@@ -496,13 +498,19 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 	@Override
 	@Nullable
 	public final HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+		// 寻找对应的处理器，一般找到的是我们在Controller中定义的处理器。也内置了一个处理/error路径的处理器，就是我们常见的Whitelabel Error Page
+		// 这里拿到的返回值，一般是一个HandlerMethod对象，其中内部包括了处理器对应的Controller的单例实例、IOC容器、Controller的类型，处理器具体方法等等
 		Object handler = getHandlerInternal(request);
+		// 如果找不到特定handler，用defaultHandler，defaultHandler就是路径为/**的handler
 		if (handler == null) {
 			handler = getDefaultHandler();
 		}
+		// 如果也没有defaultHandler
 		if (handler == null) {
 			return null;
 		}
+		// 如果该handler是String类型的，说明是beanName，根据该beanName从IOC容器获取对应的handler对象
+		// 实际上上面调用getHandlerInternal方法时已经这样处理过一次了，不知道为什么这里还要处理一次
 		// Bean name or resolved handler?
 		if (handler instanceof String) {
 			String handlerName = (String) handler;
@@ -514,6 +522,11 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 			initLookupPath(request);
 		}
 
+		// getHandlerExecutionChain方法会将 处理器 和 与当前请求路径匹配的拦截器，添加到HandlerExecutionChain中
+		// 在springboot的@RestController情况的demo中，添加了一个自定义拦截器和两个默认拦截器
+		// 两个默认拦截器分别是
+		// ConversionServiceExposingInterceptor：后面会在请求的属性中加一个键值对，值是ConversionService实例
+		// ResourceUrlProviderExposingInterceptor：后面会在请求的属性中加一个键值对，值是ResourceUrlProvider实例
 		HandlerExecutionChain executionChain = getHandlerExecutionChain(handler, request);
 
 		if (logger.isTraceEnabled()) {
@@ -523,6 +536,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 			logger.debug("Mapped to " + executionChain.getHandler());
 		}
 
+		// 跨域相关，暂时不研究
 		if (hasCorsConfigurationSource(handler) || CorsUtils.isPreFlightRequest(request)) {
 			CorsConfiguration config = getCorsConfiguration(handler, request);
 			if (getCorsConfigurationSource() != null) {
@@ -536,10 +550,12 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 			executionChain = getCorsHandlerExecutionChain(request, executionChain, config);
 		}
 
+		// 最终返回的这个HandlerExecutionChain包括请求对应的处理器和匹配的拦截器
 		return executionChain;
 	}
 
 	/**
+	 * 查找对应handler的具体过程，交由子类实现
 	 * Look up a handler for the given request, returning {@code null} if no
 	 * specific one is found. This method is called by {@link #getHandler};
 	 * a {@code null} return value will lead to the default handler, if one is set.
@@ -606,6 +622,7 @@ public abstract class AbstractHandlerMapping extends WebApplicationObjectSupport
 		HandlerExecutionChain chain = (handler instanceof HandlerExecutionChain ?
 				(HandlerExecutionChain) handler : new HandlerExecutionChain(handler));
 
+		// 在执行链中加上匹配的拦截器
 		for (HandlerInterceptor interceptor : this.adaptedInterceptors) {
 			if (interceptor instanceof MappedInterceptor) {
 				MappedInterceptor mappedInterceptor = (MappedInterceptor) interceptor;

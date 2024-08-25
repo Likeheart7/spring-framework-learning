@@ -55,6 +55,7 @@ import org.springframework.web.util.UrlPathHelper;
 import org.springframework.web.util.pattern.PathPatternParser;
 
 /**
+ * 一般我们在Controller写的@RequestMapping都对应一个该类型实例
  * Creates {@link RequestMappingInfo} instances from type and method-level
  * {@link RequestMapping @RequestMapping} annotations in
  * {@link Controller @Controller} classes.

@@ -140,6 +140,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 	}
 
 	/**
+	 * 为相应的路径注册 URL映射 中指定的所有 handlers处理程序
 	 * Register all handlers specified in the URL map for the corresponding paths.
 	 * @param urlMap a Map with URL paths as keys and handler beans or bean names as values
 	 * @throws BeansException if a handler couldn't be registered
@@ -150,6 +151,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 			logger.trace("No patterns in " + formatMappingName());
 		}
 		else {
+			// 这里对bean的配置进行解析，然后调用弗雷德registerHandler方法进行解析
 			urlMap.forEach((url, handler) -> {
 				// Prepend with slash if not already present.
 				if (!url.startsWith("/")) {
@@ -159,6 +161,7 @@ public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 				if (handler instanceof String) {
 					handler = ((String) handler).trim();
 				}
+				// 调用的是父类的方法
 				registerHandler(url, handler);
 			});
 			logMappings();

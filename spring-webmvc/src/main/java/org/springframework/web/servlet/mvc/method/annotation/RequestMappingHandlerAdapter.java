@@ -788,8 +788,10 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
 
 		ModelAndView mav;
+		// 请求校验
 		checkRequest(request);
 
+		// 查看是否需要在同步块中执行，一般不用
 		// Execute invokeHandlerMethod in synchronized block if required.
 		if (this.synchronizeOnSession) {
 			HttpSession session = request.getSession(false);
@@ -800,6 +802,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 				}
 			}
 			else {
+				// invokeHandlerMethod，执行处理器的方法
 				// No HttpSession available -> no mutex necessary
 				mav = invokeHandlerMethod(request, response, handlerMethod);
 			}
@@ -853,6 +856,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	protected ModelAndView invokeHandlerMethod(HttpServletRequest request,
 			HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
 
+		// 设置各种属性、参数
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 		AsyncWebRequest asyncWebRequest = WebAsyncUtils.createAsyncWebRequest(request, response);
 		asyncWebRequest.setTimeout(this.asyncRequestTimeout);
@@ -900,6 +904,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 				invocableMethod = invocableMethod.wrapConcurrentResult(result);
 			}
 
+			// 真正调用controller的地方法
 			invocableMethod.invokeAndHandle(webRequest, mavContainer);
 			if (asyncManager.isConcurrentHandlingStarted()) {
 				return null;

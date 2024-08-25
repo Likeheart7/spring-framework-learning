@@ -39,6 +39,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 /**
+ * 辅助URL路径匹配的工具类
  * Helper class for URL path matching. Provides support for URL paths in
  * {@code RequestDispatcher} includes and support for consistent URL decoding.
  *
@@ -78,12 +79,15 @@ public class UrlPathHelper {
 	static volatile Boolean websphereComplianceFlag;
 
 
+	// 是否匹配全路径标记
 	private boolean alwaysUseFullPath = false;
 
+	// 是否需要decode
 	private boolean urlDecode = true;
 
 	private boolean removeSemicolonContent = true;
 
+	// 默认编码格式
 	private String defaultEncoding = WebUtils.DEFAULT_CHARACTER_ENCODING;
 
 	private boolean readOnly = false;
@@ -349,7 +353,9 @@ public class UrlPathHelper {
 	 * @see #getLookupPathForRequest
 	 */
 	public String getPathWithinApplication(HttpServletRequest request) {
+		// 获取context path
 		String contextPath = getContextPath(request);
+		// 获取uri
 		String requestUri = getRequestUri(request);
 		String path = getRemainingPath(requestUri, contextPath, true);
 		if (path != null) {
@@ -420,6 +426,7 @@ public class UrlPathHelper {
 	}
 
 	/**
+	 * 返回请求对应的uri
 	 * Return the request URI for the given request, detecting an include request
 	 * URL if called within a RequestDispatcher include.
 	 * <p>As the value returned by {@code request.getRequestURI()} is <i>not</i>
@@ -431,14 +438,18 @@ public class UrlPathHelper {
 	 * @return the request URI
 	 */
 	public String getRequestUri(HttpServletRequest request) {
+		// 从请求的属性中获取
 		String uri = (String) request.getAttribute(WebUtils.INCLUDE_REQUEST_URI_ATTRIBUTE);
 		if (uri == null) {
+			// 调用方法获取
 			uri = request.getRequestURI();
 		}
+		// 解码和清理
 		return decodeAndCleanUriString(request, uri);
 	}
 
 	/**
+	 * 获取context-path地址
 	 * Return the context path for the given request, detecting an include request
 	 * URL if called within a RequestDispatcher include.
 	 * <p>As the value returned by {@code request.getContextPath()} is <i>not</i>
@@ -447,6 +458,7 @@ public class UrlPathHelper {
 	 * @return the context path
 	 */
 	public String getContextPath(HttpServletRequest request) {
+		// 从请求中获取context path
 		String contextPath = (String) request.getAttribute(WebUtils.INCLUDE_CONTEXT_PATH_ATTRIBUTE);
 		if (contextPath == null) {
 			contextPath = request.getContextPath();
@@ -455,6 +467,7 @@ public class UrlPathHelper {
 			// Invalid case, but happens for includes on Jetty: silently adapt it.
 			contextPath = "";
 		}
+		// 解码context path
 		return decodeRequestString(request, contextPath);
 	}
 
@@ -543,16 +556,21 @@ public class UrlPathHelper {
 	}
 
 	/**
+	 * 解码提供的 URI 字符串并去除 ';' 之后的任何无关部分
 	 * Decode the supplied URI string and strips any extraneous portion after a ';'.
 	 */
 	private String decodeAndCleanUriString(HttpServletRequest request, String uri) {
+		// 去掉分号
 		uri = removeSemicolonContent(uri);
+		// 解码
 		uri = decodeRequestString(request, uri);
+		// 去掉  // 双斜杠
 		uri = getSanitizedPath(uri);
 		return uri;
 	}
 
 	/**
+	 * 判断是否需要编码
 	 * Decode the given source string with a URLDecoder. The encoding will be taken
 	 * from the request, falling back to the default "ISO-8859-1".
 	 * <p>The default implementation uses {@code URLDecoder.decode(input, enc)}.
@@ -565,16 +583,20 @@ public class UrlPathHelper {
 	 * @see java.net.URLDecoder#decode(String)
 	 */
 	public String decodeRequestString(HttpServletRequest request, String source) {
+		// 判断是否需要解码
 		if (this.urlDecode) {
 			return decodeInternal(request, source);
 		}
+		// 不需要就直接返回
 		return source;
 	}
 
 	@SuppressWarnings("deprecation")
 	private String decodeInternal(HttpServletRequest request, String source) {
+		// 确认解码方式
 		String enc = determineEncoding(request);
 		try {
+			// 将source解码成指定格式
 			return UriUtils.decode(source, enc);
 		}
 		catch (UnsupportedCharsetException ex) {
@@ -587,6 +609,7 @@ public class UrlPathHelper {
 	}
 
 	/**
+	 * 确认给定请求的编码
 	 * Determine the encoding for the given request.
 	 * Can be overridden in subclasses.
 	 * <p>The default implementation checks the request encoding,
@@ -597,8 +620,10 @@ public class UrlPathHelper {
 	 * @see #setDefaultEncoding
 	 */
 	protected String determineEncoding(HttpServletRequest request) {
+		// 从请求中获取编码方式
 		String enc = request.getCharacterEncoding();
 		if (enc == null) {
+			// 默认编码
 			enc = getDefaultEncoding();
 		}
 		return enc;
@@ -650,6 +675,7 @@ public class UrlPathHelper {
 	}
 
 	/**
+	 * 通过{@link #decodeRequestString} 解码给定的uri路径变量
 	 * Decode the given URI path variables via {@link #decodeRequestString} unless
 	 * {@link #setUrlDecode} is set to {@code true} in which case it is assumed
 	 * the URL path from which the variables were extracted is already decoded
@@ -670,6 +696,7 @@ public class UrlPathHelper {
 	}
 
 	/**
+	 * 通过decodeRequestString解码给定的矩阵变量
 	 * Decode the given matrix variables via {@link #decodeRequestString} unless
 	 * {@link #setUrlDecode} is set to {@code true} in which case it is assumed
 	 * the URL path from which the variables were extracted is already decoded
@@ -681,10 +708,11 @@ public class UrlPathHelper {
 	public MultiValueMap<String, String> decodeMatrixVariables(
 			HttpServletRequest request, MultiValueMap<String, String> vars) {
 
+		// 是否需要重新编码
 		if (this.urlDecode) {
 			return vars;
 		}
-		else {
+		else {	// 需要重新编码
 			MultiValueMap<String, String> decodedVars = new LinkedMultiValueMap<>(vars.size());
 			vars.forEach((key, values) -> {
 				for (String value : values) {
@@ -695,6 +723,9 @@ public class UrlPathHelper {
 		}
 	}
 
+	/**
+	 * 是否删除servlet path后的双斜杠
+	 */
 	private boolean shouldRemoveTrailingServletPathSlash(HttpServletRequest request) {
 		if (request.getAttribute(WEBSPHERE_URI_ATTRIBUTE) == null) {
 			// Regular servlet container: behaves as expected in any case,

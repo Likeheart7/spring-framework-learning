@@ -68,20 +68,25 @@ public class HandlerMethod {
 	/** Logger that is available to subclasses. */
 	protected static final Log logger = LogFactory.getLog(HandlerMethod.class);
 
+	// beanName或者bean实例
 	private final Object bean;
 
+	// 上下文
 	@Nullable
 	private final BeanFactory beanFactory;
 
 	@Nullable
 	private final MessageSource messageSource;
 
+	// bean类型
 	private final Class<?> beanType;
 
+	// 处理方法
 	private final Method method;
 
 	private final Method bridgedMethod;
 
+	// 方法参数
 	private final MethodParameter[] parameters;
 
 	@Nullable
@@ -366,16 +371,22 @@ public class HandlerMethod {
 	}
 
 	/**
+	 * 进入这里是，this.bean可能是该处理器所处的Controller的类名，这个方法会将该属性从字符串
+	 * 替换为对应的在IOC容器里的Bean实例
 	 * If the provided instance contains a bean name rather than an object instance,
 	 * the bean name is resolved before a {@link HandlerMethod} is created and returned.
 	 */
 	public HandlerMethod createWithResolvedBean() {
+		// 获取HandlerMethod中保存的bean信息，一般是Controller的类名
 		Object handler = this.bean;
 		if (this.bean instanceof String) {
 			Assert.state(this.beanFactory != null, "Cannot resolve bean name without BeanFactory");
 			String beanName = (String) this.bean;
+			// 尝试从自己的IOC容器中获取该名称对应的bean实例
+			// 这样拿到的就是该Controller注册在本项目中的IOC容器里的bean
 			handler = this.beanFactory.getBean(beanName);
 		}
+		// 这一步，将this.bean从字符串变为Controller单例实例
 		return new HandlerMethod(this, handler);
 	}
 

@@ -120,11 +120,13 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 	@Override
 	@Nullable
 	protected HandlerMethod getHandlerInternal(HttpServletRequest request) throws Exception {
+		// 尝试移除请求中属性键为该常量的属性
 		request.removeAttribute(PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE);
 		try {
 			return super.getHandlerInternal(request);
 		}
 		finally {
+			// 清除文件上传请求使用的资源
 			ProducesRequestCondition.clearMediaTypesAttribute(request);
 		}
 	}
@@ -149,6 +151,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 
 		ProducesRequestCondition producesCondition = info.getProducesCondition();
 		if (!producesCondition.isEmpty()) {
+			// 获取 media type
 			Set<MediaType> mediaTypes = producesCondition.getProducibleMediaTypes();
 			if (!mediaTypes.isEmpty()) {
 				request.setAttribute(PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE, mediaTypes);
@@ -188,11 +191,14 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 			uriVariables = Collections.emptyMap();
 		}
 		else {
+			// 获取下个匹配器
 			bestPattern = condition.getPatterns().iterator().next();
 			uriVariables = getPathMatcher().extractUriTemplateVariables(bestPattern, lookupPath);
 			if (!getUrlPathHelper().shouldRemoveSemicolonContent()) {
+				// 处理多层参数, 带有;分号的处理
 				request.setAttribute(MATRIX_VARIABLES_ATTRIBUTE, extractMatrixVariables(request, uriVariables));
 			}
+			// 编码url参数
 			uriVariables = getUrlPathHelper().decodePathVariables(request, uriVariables);
 		}
 		request.setAttribute(BEST_MATCHING_PATTERN_ATTRIBUTE, bestPattern);
@@ -245,16 +251,21 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 			return null;
 		}
 
+		// 创建对象 PartialMatchHelper
 		PartialMatchHelper helper = new PartialMatchHelper(infos, request);
 		if (helper.isEmpty()) {
 			return null;
 		}
 
+		// 检查方法是否匹配
 		if (helper.hasMethodsMismatch()) {
 			Set<String> methods = helper.getAllowedMethods();
+			// 请求方式比较
 			if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+				// handler转换
 				Set<MediaType> mediaTypes = helper.getConsumablePatchMediaTypes();
 				HttpOptionsHandler handler = new HttpOptionsHandler(methods, mediaTypes);
+				// 构建handler method
 				return new HandlerMethod(handler, HTTP_OPTIONS_HANDLE_METHOD);
 			}
 			throw new HttpRequestMethodNotSupportedException(request.getMethod(), methods);
@@ -265,6 +276,7 @@ public abstract class RequestMappingInfoHandlerMapping extends AbstractHandlerMe
 			MediaType contentType = null;
 			if (StringUtils.hasLength(request.getContentType())) {
 				try {
+					// 字符串转成对象
 					contentType = MediaType.parseMediaType(request.getContentType());
 				}
 				catch (InvalidMediaTypeException ex) {
