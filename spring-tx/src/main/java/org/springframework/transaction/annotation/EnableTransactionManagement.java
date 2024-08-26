@@ -155,6 +155,8 @@ import org.springframework.core.Ordered;
  * @see TransactionManagementConfigurationSelector
  * @see ProxyTransactionManagementConfiguration
  * @see org.springframework.transaction.aspectj.AspectJTransactionManagementConfiguration
+ *
+ * 用于开启事务支持的注解
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

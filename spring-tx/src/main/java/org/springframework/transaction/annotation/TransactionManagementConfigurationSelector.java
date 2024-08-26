@@ -45,10 +45,13 @@ public class TransactionManagementConfigurationSelector extends AdviceModeImport
 	 */
 	@Override
 	protected String[] selectImports(AdviceMode adviceMode) {
+		// 根据切面类型来初始化
 		switch (adviceMode) {
+			// 代理
 			case PROXY:
 				return new String[] {AutoProxyRegistrar.class.getName(),
 						ProxyTransactionManagementConfiguration.class.getName()};
+			// AOP
 			case ASPECTJ:
 				return new String[] {determineTransactionAspectClass()};
 			default:

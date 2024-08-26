@@ -41,6 +41,8 @@ import javax.annotation.Nullable;
  * </pre>
  *
  * @author Rod Johnson
+ *
+ * 和HandlerInterceptor不同，是AOP用于拦截方法调用
  */
 @FunctionalInterface
 public interface MethodInterceptor extends Interceptor {

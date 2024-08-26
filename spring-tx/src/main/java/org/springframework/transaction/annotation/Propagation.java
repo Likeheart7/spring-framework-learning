@@ -19,6 +19,7 @@ package org.springframework.transaction.annotation;
 import org.springframework.transaction.TransactionDefinition;
 
 /**
+ * Spring 事务传播相关的可以选项
  * Enumeration that represents transaction propagation behaviors for use
  * with the {@link Transactional} annotation, corresponding to the
  * {@link TransactionDefinition} interface.
@@ -30,6 +31,8 @@ import org.springframework.transaction.TransactionDefinition;
 public enum Propagation {
 
 	/**
+	 * 有事务存在，就加入该事务，没有事务存在就创建该事务。
+	 * 是默认的选择
 	 * Support a current transaction, create a new one if none exists.
 	 * Analogous to EJB transaction attribute of the same name.
 	 * <p>This is the default setting of a transaction annotation.
@@ -37,6 +40,7 @@ public enum Propagation {
 	REQUIRED(TransactionDefinition.PROPAGATION_REQUIRED),
 
 	/**
+	 * 有事务，就加入该事务，没有事务，就不开启事务
 	 * Support a current transaction, execute non-transactionally if none exists.
 	 * Analogous to EJB transaction attribute of the same name.
 	 * <p>Note: For transaction managers with transaction synchronization,
@@ -50,12 +54,14 @@ public enum Propagation {
 	SUPPORTS(TransactionDefinition.PROPAGATION_SUPPORTS),
 
 	/**
+	 * 必须有事务，如果没有，就抛出异常
 	 * Support a current transaction, throw an exception if none exists.
 	 * Analogous to EJB transaction attribute of the same name.
 	 */
 	MANDATORY(TransactionDefinition.PROPAGATION_MANDATORY),
 
 	/**
+	 * 不管是否已经有事务，都创建一个新事务，如果有老事务，老事务会被挂起
 	 * Create a new transaction, and suspend the current transaction if one exists.
 	 * Analogous to the EJB transaction attribute of the same name.
 	 * <p><b>NOTE:</b> Actual transaction suspension will not work out-of-the-box
@@ -68,6 +74,7 @@ public enum Propagation {
 	REQUIRES_NEW(TransactionDefinition.PROPAGATION_REQUIRES_NEW),
 
 	/**
+	 * 不论有没有事务，都不用事务
 	 * Execute non-transactionally, suspend the current transaction if one exists.
 	 * Analogous to EJB transaction attribute of the same name.
 	 * <p><b>NOTE:</b> Actual transaction suspension will not work out-of-the-box
@@ -80,12 +87,14 @@ public enum Propagation {
 	NOT_SUPPORTED(TransactionDefinition.PROPAGATION_NOT_SUPPORTED),
 
 	/**
+	 * 必须没有事务，如果有事务就抛出异常
 	 * Execute non-transactionally, throw an exception if a transaction exists.
 	 * Analogous to EJB transaction attribute of the same name.
 	 */
 	NEVER(TransactionDefinition.PROPAGATION_NEVER),
 
 	/**
+	 * 如果有事务，就嵌套执行，如果没有就新建一个事务。
 	 * Execute within a nested transaction if a current transaction exists,
 	 * behave like {@code REQUIRED} otherwise. There is no analogous feature in EJB.
 	 * <p>Note: Actual creation of a nested transaction will only work on specific

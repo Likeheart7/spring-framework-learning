@@ -19,6 +19,7 @@ package org.springframework.transaction.annotation;
 import org.springframework.transaction.TransactionDefinition;
 
 /**
+ * 事务隔离级别
  * Enumeration that represents transaction isolation levels for use
  * with the {@link Transactional} annotation, corresponding to the
  * {@link TransactionDefinition} interface.
@@ -30,6 +31,7 @@ import org.springframework.transaction.TransactionDefinition;
 public enum Isolation {
 
 	/**
+	 * 使用数据库的事务
 	 * Use the default isolation level of the underlying datastore.
 	 * All other levels correspond to the JDBC isolation levels.
 	 * @see java.sql.Connection
@@ -37,6 +39,7 @@ public enum Isolation {
 	DEFAULT(TransactionDefinition.ISOLATION_DEFAULT),
 
 	/**
+	 * 读未提交
 	 * A constant indicating that dirty reads, non-repeatable reads and phantom reads
 	 * can occur. This level allows a row changed by one transaction to be read by
 	 * another transaction before any changes in that row have been committed
@@ -47,6 +50,7 @@ public enum Isolation {
 	READ_UNCOMMITTED(TransactionDefinition.ISOLATION_READ_UNCOMMITTED),
 
 	/**
+	 * 读已提交
 	 * A constant indicating that dirty reads are prevented; non-repeatable reads
 	 * and phantom reads can occur. This level only prohibits a transaction
 	 * from reading a row with uncommitted changes in it.
@@ -55,6 +59,7 @@ public enum Isolation {
 	READ_COMMITTED(TransactionDefinition.ISOLATION_READ_COMMITTED),
 
 	/**
+	 * 可重复读
 	 * A constant indicating that dirty reads and non-repeatable reads are
 	 * prevented; phantom reads can occur. This level prohibits a transaction
 	 * from reading a row with uncommitted changes in it, and it also prohibits
@@ -66,6 +71,7 @@ public enum Isolation {
 	REPEATABLE_READ(TransactionDefinition.ISOLATION_REPEATABLE_READ),
 
 	/**
+	 * 串行化
 	 * A constant indicating that dirty reads, non-repeatable reads and phantom
 	 * reads are prevented. This level includes the prohibitions in
 	 * {@code ISOLATION_REPEATABLE_READ} and further prohibits the situation

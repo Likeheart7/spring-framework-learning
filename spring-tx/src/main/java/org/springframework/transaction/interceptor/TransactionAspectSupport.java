@@ -374,7 +374,9 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 			return result;
 		}
 
+		// 将事务管理器转型为PlatformTransactionManager
 		PlatformTransactionManager ptm = asPlatformTransactionManager(tm);
+		// 获取方法切面
 		final String joinpointIdentification = methodIdentification(method, targetClass, txAttr);
 
 		if (txAttr == null || !(ptm instanceof CallbackPreferringPlatformTransactionManager)) {
@@ -479,26 +481,35 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	}
 
 	/**
+	 * 确定具体的事务管理器
 	 * Determine the specific transaction manager to use for the given transaction.
 	 */
 	@Nullable
 	protected TransactionManager determineTransactionManager(@Nullable TransactionAttribute txAttr) {
 		// Do not attempt to lookup tx manager if no tx attributes are set
+		// 如果没有事务属性被设置，就没必要确定事务管理器
 		if (txAttr == null || this.beanFactory == null) {
 			return getTransactionManager();
 		}
 
+		// 获取属性别名
 		String qualifier = txAttr.getQualifier();
 		if (StringUtils.hasText(qualifier)) {
+			// 如果有属性别名，从IOC容器中根据类型获取事务管理器实例
 			return determineQualifiedTransactionManager(this.beanFactory, qualifier);
 		}
 		else if (StringUtils.hasText(this.transactionManagerBeanName)) {
+			// 如果没有属性别名有事务管理器bean名称，尝试通过事务管理器名称从IOC容器中获取事务管理器实例
 			return determineQualifiedTransactionManager(this.beanFactory, this.transactionManagerBeanName);
 		}
 		else {
+			// 通过get获取
 			TransactionManager defaultTransactionManager = getTransactionManager();
+			// 如果还是没有获取到
 			if (defaultTransactionManager == null) {
+				// 尝试从缓存获取
 				defaultTransactionManager = this.transactionManagerCache.get(DEFAULT_TRANSACTION_MANAGER_KEY);
+				// 缓存里面没有，从IOC容器获取，并设置缓存
 				if (defaultTransactionManager == null) {
 					defaultTransactionManager = this.beanFactory.getBean(TransactionManager.class);
 					this.transactionManagerCache.putIfAbsent(
@@ -520,6 +531,10 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	}
 
 
+	/**
+	 * 将事务管理器转为 PlatformTransactionManager 类型
+	 * @param transactionManager 要被转型的事务管理器
+	 */
 	@Nullable
 	private PlatformTransactionManager asPlatformTransactionManager(@Nullable Object transactionManager) {
 		if (transactionManager == null || transactionManager instanceof PlatformTransactionManager) {
@@ -537,6 +552,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 		String methodIdentification = methodIdentification(method, targetClass);
 		if (methodIdentification == null) {
 			if (txAttr instanceof DefaultTransactionAttribute) {
+				// 直接获取方法签名
 				methodIdentification = ((DefaultTransactionAttribute) txAttr).getDescriptor();
 			}
 			if (methodIdentification == null) {
@@ -580,6 +596,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 			@Nullable TransactionAttribute txAttr, final String joinpointIdentification) {
 
 		// If no name specified, apply method identification as transaction name.
+		// 放入切面地址
 		if (txAttr != null && txAttr.getName() == null) {
 			txAttr = new DelegatingTransactionAttribute(txAttr) {
 				@Override

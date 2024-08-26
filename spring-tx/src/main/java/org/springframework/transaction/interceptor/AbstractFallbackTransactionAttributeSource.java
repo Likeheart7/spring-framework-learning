@@ -92,6 +92,7 @@ public abstract class AbstractFallbackTransactionAttributeSource
 
 
 	/**
+	 * 获取事务属性
 	 * Determine the transaction attribute for this method invocation.
 	 * <p>Defaults to the class's transaction attribute if no method attribute is found.
 	 * @param method the method for the current invocation (never {@code null})
@@ -106,6 +107,7 @@ public abstract class AbstractFallbackTransactionAttributeSource
 			return null;
 		}
 
+		// 首先尝试从缓存中获取
 		// First, see if we have a cached value.
 		Object cacheKey = getCacheKey(method, targetClass);
 		TransactionAttribute cached = this.attributeCache.get(cacheKey);
@@ -121,6 +123,7 @@ public abstract class AbstractFallbackTransactionAttributeSource
 		}
 		else {
 			// We need to work it out.
+			// 自己创建事务属性
 			TransactionAttribute txAttr = computeTransactionAttribute(method, targetClass);
 			// Put it in the cache.
 			if (txAttr == null) {
