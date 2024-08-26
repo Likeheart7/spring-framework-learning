@@ -23,6 +23,7 @@ import org.springframework.core.ResolvableType;
 import org.springframework.lang.Nullable;
 
 /**
+ * 本接口定义如何描述了一个 bean 实例，实例具有bean的属性值、构造函数参数值以及其他更多信息。
  * A BeanDefinition describes a bean instance, which has property values,
  * constructor argument values, and further information supplied by
  * concrete implementations.

@@ -61,6 +61,11 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.aop.framework.ProxyFactoryBean
  * @see org.springframework.jndi.JndiObjectFactoryBean
+ * 本身就是一个Bean，可以生产其他的Bean，被BeanFactory管理
+ * 提供了三个方法
+ * 1. getObject
+ * 2. isSingleton：直接返回true
+ * 3. getObjectType
  */
 public interface FactoryBean<T> {
 

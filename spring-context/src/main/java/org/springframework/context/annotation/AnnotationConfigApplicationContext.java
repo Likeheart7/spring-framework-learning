@@ -52,6 +52,8 @@ import org.springframework.util.Assert;
  * @see AnnotatedBeanDefinitionReader
  * @see ClassPathBeanDefinitionScanner
  * @see org.springframework.context.support.GenericXmlApplicationContext
+ *
+ * {@link org.springframework.context.ApplicationContext} 的一个实现，用于注解开发
  */
 public class AnnotationConfigApplicationContext extends GenericApplicationContext implements AnnotationConfigRegistry {
 

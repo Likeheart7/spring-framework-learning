@@ -58,6 +58,8 @@ import org.springframework.beans.BeansException;
  * @since 06.07.2003
  * @see BeanPostProcessor
  * @see PropertyResourceConfigurer
+ *
+ * 通过该接口，可以在bean实例化对象前，对BeanDefinition做一些操作
  */
 @FunctionalInterface
 public interface BeanFactoryPostProcessor {
