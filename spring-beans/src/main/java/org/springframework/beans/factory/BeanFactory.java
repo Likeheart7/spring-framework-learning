@@ -165,6 +165,7 @@ public interface BeanFactory {
 	 * @throws NoSuchBeanDefinitionException if there is no such bean definition
 	 * @throws BeanNotOfRequiredTypeException if the bean is not of the required type
 	 * @throws BeansException if the bean could not be created
+	 * <p>根据名称和类型查找，有多个属于类型的bean时使用(继承导致)。</p>
 	 */
 	<T> T getBean(String name, Class<T> requiredType) throws BeansException;
 

@@ -39,6 +39,19 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.support.RootBeanDefinition
  * @see org.springframework.beans.factory.support.ChildBeanDefinition
  */
+
+/**
+ * BeanDefinition元信息主要包括
+ * Class： Bean的全类名
+ * Name：Bean的名称或id
+ * Scope：Bean的作用域(singleton、prototype等)
+ * Constructor argument：构造器参数，用于依赖注入
+ * Properties：属性设置，用于依赖注入
+ * Autowiring mode：自动绑定模式，byName/byType/constructor等
+ * Lazy initialization mode：延迟初始化模式（是否延迟）
+ * Initialization method：初始化回调方法名称，@PostConstruct是一种
+ * Destruction method：销毁回调方法
+ */
 public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
 	/**

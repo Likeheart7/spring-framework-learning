@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="user" class="com.chenx.ioc.dependency.domain.User">
+		<property name="id" value="29597"/>
+		<property name="name" value="岑参"/>
+	</bean>
+	<bean id="administrator" class="com.chenx.ioc.dependency.domain.Administrator" primary="true">
+		<property name="id" value="11111"/>
+		<property name="name" value="管理员陈生"/>
+		<property name="permissions" value="1"/>
+	</bean>
+
+	<bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName" value="user"/>
+	</bean>
+
+</beans>

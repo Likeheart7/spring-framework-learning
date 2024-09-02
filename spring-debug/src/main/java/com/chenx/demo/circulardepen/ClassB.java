@@ -1,4 +1,4 @@
-package com.chenx.circulardepen;
+package com.chenx.demo.circulardepen;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

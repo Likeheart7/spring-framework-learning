@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--通过import导入其他配置文件-->
+	<import resource="dependency-lookup-context.xml"/>
+	<!--autowire属性会自动对该bean的属性进行注入，这里我的idea提示Unnecessary autowired dependency，但是实际上是不能省略的-->
+	<bean id="userRepository" class="com.chenx.ioc.dependency.injection.repository.UserRepository" autowire="byType">
+	</bean>
+</beans>

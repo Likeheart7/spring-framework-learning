@@ -81,7 +81,9 @@ import java.lang.annotation.Target;
  * @see Bean
  * @see ComponentScan
  * @see org.springframework.stereotype.Component
+ *
  */
+//被@Primary修饰的bean，在有多个候选的情况下被优先选择，对应xml中bean标签的primary属性
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

@@ -96,6 +96,10 @@ import org.springframework.util.Assert;
  */
 public class GenericApplicationContext extends AbstractApplicationContext implements BeanDefinitionRegistry {
 
+	/**
+	 * 平常springboot的ApplicationContext中的BeanFactory就是继承的这个属性
+	 * 调用的是{@link GenericApplicationContext#getBeanFactory()()}
+ 	 */
 	private final DefaultListableBeanFactory beanFactory;
 
 	@Nullable

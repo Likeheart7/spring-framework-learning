@@ -1,4 +1,4 @@
-package com.chenx.bean;
+package com.chenx.demo.bean;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

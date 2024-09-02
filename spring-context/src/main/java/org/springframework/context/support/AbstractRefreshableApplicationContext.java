@@ -71,6 +71,8 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	private Boolean allowCircularReferences;
 
 	/** Bean factory for this context. */
+	// ClassPathXmlApplicationContext和AnnotationConfigApplicationContext的beanFactory属性来自这里
+	// 和SpringBoot不同，那个来自GenericApplicationContext
 	@Nullable
 	private volatile DefaultListableBeanFactory beanFactory;
 
@@ -135,7 +137,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			customizeBeanFactory(beanFactory);
 			// 加载BeanDefinition，本类中的该方法是一个抽象方法。
 			loadBeanDefinitions(beanFactory);
-			// 将IOC容器赋给自身属性
+			// 将IOC容器赋给自身属性，这个版本这行代码没有同步，5.2.2有同步，考虑是外部的锁已经保证了这里不会被多线程影响
 			this.beanFactory = beanFactory;
 		}
 		catch (IOException ex) {
