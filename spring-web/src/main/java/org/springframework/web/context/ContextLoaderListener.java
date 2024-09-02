@@ -20,6 +20,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
+ * 该类会监听Servlet容器的启动事件，当Servlet容器启动时，Spring会创建并初始化Spring容器。
+ * 当Servlet容器启动事件触发时，便会执行本类的{@link #contextInitialized(ServletContextEvent)}方法
  * Bootstrap listener to start up and shut down Spring's root {@link WebApplicationContext}.
  * Simply delegates to {@link ContextLoader} as well as to {@link ContextCleanupListener}.
  *

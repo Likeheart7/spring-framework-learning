@@ -28,6 +28,7 @@ import org.springframework.lang.Nullable;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see DefaultAopProxyFactory
+ * <p>动态代理的顶级接口，主要有2个实现，分别是JdkDynamicAopProxy、CglibAopProxy。ObjenesisCglibAopProxy是CgLib的一个基于Objenesis的实现</p>
  */
 public interface AopProxy {
 

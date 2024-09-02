@@ -80,6 +80,7 @@ import org.springframework.util.ReflectionUtils;
  * @see org.springframework.cglib.proxy.Enhancer
  * @see AdvisedSupport#setProxyTargetClass
  * @see DefaultAopProxyFactory
+ * 动态代理的CgLib实现
  */
 @SuppressWarnings("serial")
 class CglibAopProxy implements AopProxy, Serializable {

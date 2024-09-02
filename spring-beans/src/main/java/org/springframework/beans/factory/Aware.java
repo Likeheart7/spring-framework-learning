@@ -31,6 +31,11 @@ package org.springframework.beans.factory;
  * @author Chris Beams
  * @author Juergen Hoeller
  * @since 3.1
+ * <pre>
+ * Aware的子接口，一般为XxxAware，提供一个setXxx方法，将对应的实例作为参数传递给该方法，用于可以通过Aware接口获取自己感兴趣的实例。
+ * 如{@link org.springframework.context.ApplicationContextAware}
+ * {@link BeanFactoryAware}
+ * </pre>
  */
 public interface Aware {
 

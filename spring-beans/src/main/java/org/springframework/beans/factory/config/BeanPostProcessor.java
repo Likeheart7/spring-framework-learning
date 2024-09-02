@@ -55,7 +55,9 @@ import org.springframework.lang.Nullable;
  * @see ConfigurableBeanFactory#addBeanPostProcessor
  * @see BeanFactoryPostProcessor
  *
- * 通过这个接口，可以在bean初始化前后做一些操作
+ * <pre>
+ * 提供bean初始化前后的处理
+ * </pre>
  */
 public interface BeanPostProcessor {
 
