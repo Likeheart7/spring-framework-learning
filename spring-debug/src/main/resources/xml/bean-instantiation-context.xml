@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 1. 通过静态方法 -->
+	<bean id="by-static-method" class="com.chenx.ioc.bean.definition.pojo.Instance" factory-method="createInstant"/>
+	<!-- 2. 通过实例方法 -->
+	<bean id="instanceFactory" class="com.chenx.ioc.bean.definition.pojo.InstanceFactory"/>
+	<bean id="by-instance-method" factory-bean="instanceFactory" factory-method="createInstance"/>
+	<!--通过FactoryBean-->
+	<!--即如果配置的类型是FactoryBean，那么实际上被配置进去的，是他的getObject方法的返回值-->
+	<bean id="by-factory-bean" class="com.chenx.ioc.bean.definition.pojo.InstanceFactoryBean"/>
+</beans>

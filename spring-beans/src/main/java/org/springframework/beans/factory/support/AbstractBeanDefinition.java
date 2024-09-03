@@ -149,7 +149,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * 该属性可以控制依赖注入的时机
 	 * false：容器初始化时进行依赖注入
-	 * true：应用第一次调用getBean时进行依赖注入
+	 * true：应用第一次访问该Bean时进行依赖注入
+	 * {@link org.springframework.context.annotation.Lazy} 注解就会将该属性置为true
 	 */
 	@Nullable
 	private Boolean lazyInit;
@@ -188,9 +189,11 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private MethodOverrides methodOverrides = new MethodOverrides();
 
+	// 初始化方法,来自bean标签的init-method属性,或@Bean的initMethod参数
 	@Nullable
 	private String initMethodName;
 
+	// 销毁方法,来自bean标签的destroy-method属性,或@Bean的destroyMethod参数
 	@Nullable
 	private String destroyMethodName;
 

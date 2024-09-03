@@ -66,6 +66,7 @@ import org.springframework.lang.Nullable;
  * 1. getObject
  * 2. isSingleton：默认直接返回true
  * 3. getObjectType
+ * 当一个该类型的Bean被配置时，实际上被配置进入IoC容器的，是其getObject方法的返回值
  */
 public interface FactoryBean<T> {
 

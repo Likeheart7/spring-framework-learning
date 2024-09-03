@@ -62,9 +62,14 @@ import org.springframework.util.StringUtils;
  * @see javax.inject.Named#value()
  * @see FullyQualifiedAnnotationBeanNameGenerator
  */
+
+/*
+ * 基于注解的情况下，Bean名称的生成器
+ */
 public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
 	/**
+	 * 和默认的生成器一样，也提供了一个单例来允许用户使用
 	 * A convenient constant for a default {@code AnnotationBeanNameGenerator} instance,
 	 * as used for component scanning purposes.
 	 * @since 5.2

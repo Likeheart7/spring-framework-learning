@@ -599,7 +599,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
-				// 实例化所有持有的非懒初始化的单例
+				// 实例化所有持有的非lazyInit的单例
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
