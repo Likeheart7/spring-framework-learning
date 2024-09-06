@@ -52,8 +52,15 @@ public class DefaultAopProxyFactory implements AopProxyFactory, Serializable {
 	private static final long serialVersionUID = 7930414337282325166L;
 
 
+	/**
+	 * 最终创建代理对象的方法
+	 * @param config the AOP configuration in the form of an
+	 * AdvisedSupport object
+	 * @return
+	 * @throws AopConfigException
+	 */
 	@Override
-	public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
+		public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
 		if (!NativeDetector.inNativeImage() &&
 				(config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config))) {
 			Class<?> targetClass = config.getTargetClass();
