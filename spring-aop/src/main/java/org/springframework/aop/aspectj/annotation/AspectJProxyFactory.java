@@ -32,6 +32,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
+ * 基于 AspectJ 的代理工厂，允许以编程方式构建代理，其中包括 AspectJ 方面（代码风格以及注解风格）
  * AspectJ-based proxy factory, allowing for programmatic building
  * of proxies which include AspectJ aspects (code style as well
  * annotation style).

@@ -93,6 +93,15 @@ import org.springframework.util.StringUtils;
  * @see BeanNameAutoProxyCreator
  * @see DefaultAdvisorAutoProxyCreator
  */
+/**
+ * <pre>
+ * 本质上是一个BeanPostProcessor，是Spring AOP自动代理的核心类
+ * 子类中最重要的三个分别是
+ * {@link BeanNameAutoProxyCreator}
+ * {@link DefaultAdvisorAutoProxyCreator}
+ * {@link org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator }
+ * </pre>
+ */
 @SuppressWarnings("serial")
 public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware {

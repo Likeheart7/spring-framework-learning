@@ -14,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.aspectj:aspectjweaver:1.9.7")
     implementation(project(":spring-context"))
     implementation(project(":spring-webmvc"))
     testImplementation platform('org.junit:junit-bom:5.9.1')
