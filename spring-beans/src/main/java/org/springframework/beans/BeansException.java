@@ -29,6 +29,7 @@ import org.springframework.lang.Nullable;
  * @author Rod Johnson
  * @author Juergen Hoeller
  */
+// Spring中异常的父类，因为是RuntimeException的子类，所以不需要显示try..catch或throws
 @SuppressWarnings("serial")
 public abstract class BeansException extends NestedRuntimeException {
 

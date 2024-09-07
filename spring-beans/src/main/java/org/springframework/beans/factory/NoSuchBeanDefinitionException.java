@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
  * Exception thrown when a {@code BeanFactory} is asked for a bean instance for which it
  * cannot find a definition. This may point to a non-existing bean, a non-unique bean,
  * or a manually registered singleton instance without an associated bean definition.
- *
+ * 查找的Bean不存在于IOC容器
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Stephane Nicoll

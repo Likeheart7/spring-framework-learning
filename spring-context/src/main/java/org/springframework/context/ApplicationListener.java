@@ -39,6 +39,7 @@ import java.util.function.Consumer;
  * @see org.springframework.context.event.GenericApplicationListener
  * @see org.springframework.context.event.EventListener
  */
+// 传统监听应用事件需要实现的接口，一次只能监听一个事件。
 @FunctionalInterface
 public interface ApplicationListener<E extends ApplicationEvent> extends EventListener {
 

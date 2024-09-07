@@ -28,7 +28,8 @@ import org.springframework.lang.Nullable;
 /**
  * Exception thrown when a BeanFactory encounters an error when
  * attempting to create a bean from a bean definition.
- *
+ * <br/>
+ * 创建bean失败，可能是没有具体子类
  * @author Juergen Hoeller
  */
 @SuppressWarnings("serial")

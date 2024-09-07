@@ -24,7 +24,7 @@ import org.springframework.lang.Nullable;
 /**
  * Exception thrown when instantiation of a bean failed.
  * Carries the offending bean class.
- *
+ * Bean对应的类型不具体
  * @author Juergen Hoeller
  * @since 1.2.8
  */

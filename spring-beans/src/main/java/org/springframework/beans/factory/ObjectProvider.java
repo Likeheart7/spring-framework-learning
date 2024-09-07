@@ -54,6 +54,8 @@ public interface ObjectProvider<T> extends ObjectFactory<T>, Iterable<T> {
 	T getObject(Object... args) throws BeansException;
 
 	/**
+	 * 如果找不到对应的Bean，不会抛出异常，而是返回null
+	 * 如果是多个，也会抛出异常
 	 * Return an instance (possibly shared or independent) of the object
 	 * managed by this factory.
 	 * @return an instance of the bean, or {@code null} if not available
@@ -64,6 +66,7 @@ public interface ObjectProvider<T> extends ObjectFactory<T>, Iterable<T> {
 	T getIfAvailable() throws BeansException;
 
 	/**
+	 * 返回持有的实例，如果没有，就返回参数回调方法的结果返回。
 	 * Return an instance (possibly shared or independent) of the object
 	 * managed by this factory.
 	 * @param defaultSupplier a callback for supplying a default object
