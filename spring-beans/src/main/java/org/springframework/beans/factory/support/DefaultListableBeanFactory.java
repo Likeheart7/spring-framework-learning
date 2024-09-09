@@ -1292,6 +1292,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	/**
 	 * 依赖注入前的依赖查找
+	 * 该方法逻辑就是依赖注入和依赖查找(getBean)来源的区别所在。
 	 */
 	@Override
 	@Nullable

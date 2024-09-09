@@ -62,6 +62,7 @@ import org.springframework.util.CollectionUtils;
  * @see EventListenerFactory
  * @see DefaultEventListenerFactory
  */
+// 处理标注@EventListener注解的
 public class EventListenerMethodProcessor
 		implements SmartInitializingSingleton, ApplicationContextAware, BeanFactoryPostProcessor {
 
