@@ -22,6 +22,7 @@ public class FactoryBeanLookupEx {
 		context.refresh();
 		// class com.chenx.ioc.dependency.domain.User
 		// 所以说放入IOC容器的不是FactoryBean类型，而是其getObject方法的返回值，而且该单例在factoryBeanObjectCache中
+		// 第一次调用getBean,会通过getObject获取实际对象, 然后将其放入factoryBeanObjectCache中,以后就从中取
 		System.out.println(context.getBean("factoryUser").getClass());	// 获取的是factoryBeanObjectCache中的bean
 		System.out.println(context.getBean("&factoryUser").getClass());	// 获取的是singletonObjects中的bean
 		// 如果要获取FactoryBean实例，需要在前面加个&
