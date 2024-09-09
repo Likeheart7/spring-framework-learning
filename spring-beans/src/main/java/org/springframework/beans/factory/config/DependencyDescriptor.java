@@ -42,6 +42,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 依赖描述符
  * Descriptor for a specific dependency that is about to be injected.
  * Wraps a constructor parameter, a method parameter or a field,
  * allowing unified access to their metadata.
@@ -51,7 +52,7 @@ import org.springframework.util.ObjectUtils;
  */
 @SuppressWarnings("serial")
 public class DependencyDescriptor extends InjectionPoint implements Serializable {
-
+	// 声明该依赖的类
 	private final Class<?> declaringClass;
 
 	@Nullable
@@ -62,13 +63,17 @@ public class DependencyDescriptor extends InjectionPoint implements Serializable
 
 	private int parameterIndex;
 
+	// 字段名称
 	@Nullable
 	private String fieldName;
 
+	// 是否必须
 	private final boolean required;
 
+	// 懒加载相关
 	private final boolean eager;
 
+	// 嵌套层级
 	private int nestingLevel = 1;
 
 	@Nullable

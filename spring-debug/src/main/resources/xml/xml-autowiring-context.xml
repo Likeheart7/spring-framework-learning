@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.chenx.ioc.dependency.domain.User" name="user">
+		<property name="id" value="10"/>
+		<property name="name" value="陈新"/>
+	</bean>
+	<bean class="com.chenx.ioc.di.UserHolder">
+		<!--手动注入-->
+		<property name="user" ref="user"/>
+	</bean>
+	<!--自动注入-->
+<!--	<bean class="com.chenx.ioc.di.UserHolder" autowire="byType" name="autowiredUserHolder">-->
+<!--	</bean>-->
+</beans>

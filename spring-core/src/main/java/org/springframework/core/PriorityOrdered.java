@@ -44,5 +44,6 @@ package org.springframework.core;
  * @see org.springframework.beans.factory.config.PropertyOverrideConfigurer
  * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
  */
+// BeanPostProcessor一般都会实现这个接口来定义顺序
 public interface PriorityOrdered extends Ordered {
 }

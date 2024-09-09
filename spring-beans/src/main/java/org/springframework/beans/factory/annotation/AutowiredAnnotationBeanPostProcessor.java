@@ -161,6 +161,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 
 
 	/**
+	 * 本类可以处理@Autowired和@Value，也支持JSR-330的@Inject的处理
 	 * Create a new {@code AutowiredAnnotationBeanPostProcessor} for Spring's
 	 * standard {@link Autowired @Autowired} and {@link Value @Value} annotations.
 	 * <p>Also supports JSR-330's {@link javax.inject.Inject @Inject} annotation,
@@ -659,6 +660,8 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 
 
 	/**
+	 * 字段注入的处理类
+	 * 核心：field.set()
 	 * Class representing injection information about an annotated field.
 	 */
 	private class AutowiredFieldElement extends InjectionMetadata.InjectedElement {
@@ -694,11 +697,19 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 				value = resolveFieldValue(field, bean, beanName);
 			}
 			if (value != null) {
+				// 改变可见性
 				ReflectionUtils.makeAccessible(field);
+				// 字段注入
 				field.set(bean, value);
 			}
 		}
 
+		/**
+		 * 字段注入前的依赖查找
+		 * @param field	要被注入的字段
+		 * @param bean	被注入字段所处的bean
+		 * @param beanName	被注入字段所处的bean名称
+		 */
 		@Nullable
 		private Object resolveFieldValue(Field field, Object bean, @Nullable String beanName) {
 			DependencyDescriptor desc = new DependencyDescriptor(field, this.required);
@@ -708,6 +719,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 			TypeConverter typeConverter = beanFactory.getTypeConverter();
 			Object value;
 			try {
+				// 依赖查找
 				value = beanFactory.resolveDependency(desc, beanName, autowiredBeanNames, typeConverter);
 			}
 			catch (BeansException ex) {
@@ -740,6 +752,8 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 
 
 	/**
+	 * 方法注入的处理类
+	 * 核心：method.invoke()
 	 * Class representing injection information about an annotated method.
 	 */
 	private class AutowiredMethodElement extends InjectionMetadata.InjectedElement {
