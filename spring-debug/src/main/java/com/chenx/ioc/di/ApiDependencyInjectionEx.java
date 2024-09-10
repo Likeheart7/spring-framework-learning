@@ -1,5 +1,6 @@
 package com.chenx.ioc.di;
 
+import com.chenx.ioc.pojo.UserHolder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 

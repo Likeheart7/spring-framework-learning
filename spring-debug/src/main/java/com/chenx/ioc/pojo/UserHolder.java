@@ -1,4 +1,4 @@
-package com.chenx.ioc.di;
+package com.chenx.ioc.pojo;
 
 import com.chenx.ioc.dependency.domain.User;
 

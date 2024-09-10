@@ -1,6 +1,7 @@
 package com.chenx.ioc.di;
 
 import com.chenx.ioc.dependency.domain.User;
+import com.chenx.ioc.pojo.UserHolder;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;

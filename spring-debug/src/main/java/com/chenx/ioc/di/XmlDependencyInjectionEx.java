@@ -1,8 +1,8 @@
 package com.chenx.ioc.di;
 
+import com.chenx.ioc.pojo.UserHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -37,7 +37,7 @@ public class XmlDependencyInjectionEx {
 		=====>>> setter......
 		=====>>> setter......
 		{
-			com.chenx.ioc.di.UserHolder#0=UserHolder{user=User{id=10, name='陈新'}},
+			com.chenx.ioc.pojo.UserHolder#0=UserHolder{user=User{id=10, name='陈新'}},
 			autowiredUserHolder=UserHolder{user=User{id=10, name='陈新'}},
 			 myUserHolder=UserHolder{user=User{id=10, name='陈新'}}
 		 }
