@@ -333,6 +333,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	ResolvableType getResolvableType();
 
 	/**
+	 * 每次调用，返回一个共享的实例
 	 * Return whether this a <b>Singleton</b>, with a single, shared instance
 	 * returned on all calls.
 	 * @see #SCOPE_SINGLETON
@@ -340,6 +341,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	boolean isSingleton();
 
 	/**
+	 * 每次调用，返回一个独立的实例。
 	 * Return whether this a <b>Prototype</b>, with an independent instance
 	 * returned for each call.
 	 * @since 3.0
