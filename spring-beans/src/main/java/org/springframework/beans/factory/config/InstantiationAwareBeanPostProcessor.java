@@ -45,6 +45,8 @@ import org.springframework.lang.Nullable;
 public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 
 	/**
+	 * 在bean初始化前，就会执行，如果返回值不是null，就直接用返回值替换原本要创建的bean
+	 * 如果返回值是null，正常执行后续逻辑
 	 * Apply this BeanPostProcessor <i>before the target bean gets instantiated</i>.
 	 * The returned bean object may be a proxy to use instead of the target bean,
 	 * effectively suppressing default instantiation of the target bean.
@@ -74,6 +76,8 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	}
 
 	/**
+	 * 返回true，正常执行，返回false，不再执行后续属性填入逻辑
+	 * 对@Bean注入的不生效，因为放进去的是在方法内创建好的已经填入属性的对象。
 	 * Perform operations after the bean has been instantiated, via a constructor or factory method,
 	 * but before Spring property population (from explicit properties or autowiring) occurs.
 	 * <p>This is the ideal callback for performing custom field injection on the given bean
@@ -93,6 +97,9 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	}
 
 	/**
+	 * 在属性填充完成后，可以手动修改属性，对@Bean也有效。
+	 * 但如果前面postProcessBeforeInstantiation或postProcessAfterInstantiation拦截过
+	 * 该方法不会被执行
 	 * Post-process the given property values before the factory applies them
 	 * to the given bean, without any need for property descriptors.
 	 * <p>Implementations should return {@code null} (the default) if they provide a custom

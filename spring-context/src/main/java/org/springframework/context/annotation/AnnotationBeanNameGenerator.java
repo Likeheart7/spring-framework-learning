@@ -91,6 +91,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 			}
 		}
 		// Fallback: generate a unique default bean name.
+		// 短类名首字母小写作为bean名称
 		return buildDefaultBeanName(definition, registry);
 	}
 
@@ -173,6 +174,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 		String beanClassName = definition.getBeanClassName();
 		Assert.state(beanClassName != null, "No bean class name set");
 		String shortClassName = ClassUtils.getShortName(beanClassName);
+		// 通过Java自省机制，实现短类名首字母小写
 		return Introspector.decapitalize(shortClassName);
 	}
 

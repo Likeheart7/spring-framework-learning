@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--通过import导入其他配置文件-->
+	<bean name="userFromXml" class="com.chenx.ioc.dependency.domain.User">
+		<property name="id" value="29"/>
+		<property name="name" value="fromXml"/>
+	</bean>
+	<bean name="userFromXml2" class="com.chenx.ioc.dependency.domain.User">
+		<property name="id" value="29"/>
+		<property name="name" value="new user"/>
+	</bean>
+</beans>
