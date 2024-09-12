@@ -76,6 +76,7 @@ import org.springframework.util.ReflectionUtils;
  * @see #setInitAnnotationType
  * @see #setDestroyAnnotationType
  */
+// 处理@PostConstruct和@PreDestory注解的BeanPostProcessor
 @SuppressWarnings("serial")
 public class InitDestroyAnnotationBeanPostProcessor
 		implements DestructionAwareBeanPostProcessor, MergedBeanDefinitionPostProcessor, PriorityOrdered, Serializable {
@@ -154,6 +155,7 @@ public class InitDestroyAnnotationBeanPostProcessor
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		LifecycleMetadata metadata = findLifecycleMetadata(bean.getClass());
 		try {
+			// 这里会处理@PostConstruct注解
 			metadata.invokeInitMethods(bean, beanName);
 		}
 		catch (InvocationTargetException ex) {
@@ -330,6 +332,7 @@ public class InitDestroyAnnotationBeanPostProcessor
 					if (logger.isTraceEnabled()) {
 						logger.trace("Invoking init method on bean '" + beanName + "': " + element.getMethod());
 					}
+					// 实际调用@PostConstruct对应方法的地方
 					element.invoke(target);
 				}
 			}
