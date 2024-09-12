@@ -84,6 +84,7 @@ class ObjenesisCglibAopProxy extends CglibAopProxy {
 			}
 		}
 
+		// 这里就是给AOP代理设置对应MethodInterceptor实现回调的地方。
 		((Factory) proxyInstance).setCallbacks(callbacks);
 		return proxyInstance;
 	}

@@ -4,7 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main {
 	public static void main(String[] args) {
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("com.chenx.circularDepen");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("com.chenx.demo.circulardepen");
 		ClassA bean = context.getBean(ClassA.class);
 		System.out.println(bean.getB());
 	}
