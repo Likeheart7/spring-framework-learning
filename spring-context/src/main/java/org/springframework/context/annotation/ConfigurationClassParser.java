@@ -407,6 +407,7 @@ class ConfigurationClassParser {
 			try {
 				AnnotationMetadata asm =
 						this.metadataReaderFactory.getMetadataReader(original.getClassName()).getAnnotationMetadata();
+				// 获取所有被@Bean修饰的方法
 				Set<MethodMetadata> asmMethods = asm.getAnnotatedMethods(Bean.class.getName());
 				if (asmMethods.size() >= beanMethods.size()) {
 					Set<MethodMetadata> candidateMethods = new LinkedHashSet<>(beanMethods);
