@@ -41,6 +41,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
  * @author Chris Beams
  * @since 3.2
  */
+// 具备Annotation配置驱动能力的AbstractDispatcherServletInitializer子类，也是最推荐使用的
 public abstract class AbstractAnnotationConfigDispatcherServletInitializer
 		extends AbstractDispatcherServletInitializer {
 

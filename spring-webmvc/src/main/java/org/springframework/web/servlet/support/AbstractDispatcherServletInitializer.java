@@ -50,6 +50,7 @@ import org.springframework.web.servlet.FrameworkServlet;
  * @author Stephane Nicoll
  * @since 3.2
  */
+// 替代web.xml注册DispatcherServlet，并且如果必要，创建web root应用上下文(WebApplicationContext)
 public abstract class AbstractDispatcherServletInitializer extends AbstractContextLoaderInitializer {
 
 	/**

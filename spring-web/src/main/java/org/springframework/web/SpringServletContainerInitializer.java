@@ -110,6 +110,11 @@ import org.springframework.util.ReflectionUtils;
  * @see #onStartup(Set, ServletContext)
  * @see WebApplicationInitializer
  */
+/*
+通过实现 Servlet 3.0 SPI 接口ServletContainerInitializer，
+与＠HandlesTypes 配合过滤出 WebApplicationInitializer具体实现类集合
+随后顺序迭代地执行该集合元素，进而利用 Servlet3.0配置API实现Web自动装配的目的。
+ */
 @HandlesTypes(WebApplicationInitializer.class)
 public class SpringServletContainerInitializer implements ServletContainerInitializer {
 

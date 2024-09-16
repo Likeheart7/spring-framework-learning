@@ -39,6 +39,7 @@ import org.springframework.web.WebApplicationInitializer;
  * @author Juergen Hoeller
  * @since 3.2
  */
+// 如果构建web root应用上下文成功，则替代web.xml注册ContextLoaderListener
 public abstract class AbstractContextLoaderInitializer implements WebApplicationInitializer {
 
 	/** Logger available to subclasses. */
@@ -70,6 +71,7 @@ public abstract class AbstractContextLoaderInitializer implements WebApplication
 	}
 
 	/**
+	 * 创建root ApplicationContext的方法，需要子类实现
 	 * Create the "<strong>root</strong>" application context to be provided to the
 	 * {@code ContextLoaderListener}.
 	 * <p>The returned context is delegated to
