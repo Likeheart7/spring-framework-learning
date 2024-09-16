@@ -169,6 +169,7 @@ import org.springframework.core.Ordered;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+// 基于注解的方式导入ImportSelector的实现类实现模块化
 @Import(CachingConfigurationSelector.class)
 public @interface EnableCaching {
 

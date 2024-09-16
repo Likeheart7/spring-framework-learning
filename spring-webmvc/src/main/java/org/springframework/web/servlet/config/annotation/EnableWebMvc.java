@@ -97,6 +97,7 @@ import org.springframework.context.annotation.Import;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
+// 使用注解的方式导入@Configuration修饰的配置类实现模块化
 @Import(DelegatingWebMvcConfiguration.class)
 public @interface EnableWebMvc {
 }

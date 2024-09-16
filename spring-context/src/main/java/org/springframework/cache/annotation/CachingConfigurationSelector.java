@@ -38,6 +38,7 @@ import org.springframework.util.StringUtils;
  * @see EnableCaching
  * @see ProxyCachingConfiguration
  */
+// 本类是@EnableCaching注解指定的ImportSelector实现类, 核心是selectImports方法
 public class CachingConfigurationSelector extends AdviceModeImportSelector<EnableCaching> {
 
 	private static final String PROXY_JCACHE_CONFIGURATION_CLASS =
